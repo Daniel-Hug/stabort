@@ -10,34 +10,24 @@
 })(this, function () {
 	'use strict';
 
-	function compareDesc(prop, a, b) {
-		if (b[prop] < a[prop]) return -1;
-		if (b[prop] > a[prop]) return 1;
-		if (b.i < a.i) return -1;
-		if (b.i > a.i) return 1;
-	}
-
-	function compareAsc(prop, a, b) {
-		if (a[prop] < b[prop]) return -1;
-		if (a[prop] > b[prop]) return 1;
-		if (a.i < b.i) return -1;
-		if (a.i > b.i) return 1;
-	}
-
 	return function sortBy(objs, prop, order) {
-		// add index as prop in each obj
-		objs.forEach(function(obj, i) {
-			obj.i = i;
-		});
+		// run sort on clone so as not to modify original
+		var arrClone = [].slice.call(objs, 0);
 
-		var compareFn = (order.indexOf('desc') >= 0 ? compareDesc : compareAsc).bind(null, prop);
-		objs.sort(compareFn);
+		function compareDesc(a, b) {
+			if (b[prop] < a[prop]) return -1;
+			if (b[prop] > a[prop]) return 1;
+			return objs.indexOf(b) - objs.indexOf(a);
+		}
 
-		// remove index prop from each obj
-		objs.forEach(function(obj) {
-			delete obj.i;
-		});
+		function compareAsc(a, b) {
+			if (a[prop] < b[prop]) return -1;
+			if (a[prop] > b[prop]) return 1;
+			return objs.indexOf(a) - objs.indexOf(b);
+		}
 
-		return objs;
+		arrClone.sort(order.indexOf('desc') >= 0 ? compareDesc : compareAsc);
+
+		return arrClone;
 	};
 });
