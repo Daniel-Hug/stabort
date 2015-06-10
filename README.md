@@ -1,3 +1,3 @@
-# lightweight JS stable sort & sortBy
+# lightweight JS stable sortBy
 
 'nuf said.
