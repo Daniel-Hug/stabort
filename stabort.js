@@ -17,7 +17,7 @@
 		function compareDesc(a, b) {
 			if (b[prop] < a[prop]) return -1;
 			if (b[prop] > a[prop]) return 1;
-			return objs.indexOf(b) - objs.indexOf(a);
+			return objs.indexOf(a) - objs.indexOf(b);
 		}
 
 		function compareAsc(a, b) {
